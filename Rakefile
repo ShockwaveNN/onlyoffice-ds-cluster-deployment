@@ -13,3 +13,8 @@ task :destroy_all do
   include OnlyofficeDsClusterDeployment
   destroy_all
 end
+
+task :test_psql do
+  include OnlyofficeDsClusterDeployment
+  logger.info("Test by `#{test_postgresql}`")
+end

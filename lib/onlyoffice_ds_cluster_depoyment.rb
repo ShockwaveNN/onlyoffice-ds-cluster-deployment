@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'logger'
 require 'onlyoffice_digitalocean_wrapper'
 require_relative 'onlyoffice_ds_cluster_deployment/services_service'
 
@@ -34,6 +35,14 @@ module OnlyofficeDsClusterDeployment
   # @return [String] result of execution
   def execute_ssh(ip, command)
     `ssh -o StrictHostKeyChecking=no root@#{ip} "#{command}"`
+    sleep(5) # Timeout between commands to not be banned by ssh
+  end
+
+  # @param ip [String] ip of server to execute command
+  # @param file [String] path to file
+  # @return [String] result of execution
+  def send_file(ip, file)
+    `scp -o StrictHostKeyChecking=no #{file} root@#{ip}:/root`
     sleep(5) # Timeout between commands to not be banned by ssh
   end
 end

@@ -31,19 +31,22 @@ module ServicesServer
     !do_api.get_droplet_id_by_name(services_server_name).nil?
   end
 
-  # Install postgresql and configure it
-  def install_postgres
-    execute_ssh(services_server_ip, 'apt-get -y update')
-    execute_ssh(services_server_ip, 'apt-get -y install postgresql-10')
-    replace_postgre_listen = 'sed -i \"s/.*listen_addresses.*/'\
-                             'listen_addresses=\'*\'/\" '\
-                             '/etc/postgresql/10/main/postgresql.conf'
-    execute_ssh(services_server_ip, replace_postgre_listen)
+  def init_postgres
+    init_file = "#{Dir.pwd}/lib/onlyoffice_ds_cluster_deployment/"\
+                'postgresql_init.sh'
+    send_file(services_server_ip, init_file)
+    execute_ssh(services_server_ip, 'bash /root/postgresql_init.sh')
   end
 
   # Init all services
   def init_services
     create_services_server
-    install_postgres
+    init_postgres
+  end
+
+  # @return [String] test postgresql connection
+  def test_postgresql
+    "PGPASSWORD=onlyoffice psql -h #{services_server_ip} "\
+    '-U onlyoffice onlyoffice'
   end
 end
