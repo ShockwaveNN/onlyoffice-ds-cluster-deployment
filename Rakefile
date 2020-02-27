@@ -28,3 +28,8 @@ task :test_redis do
   include OnlyofficeDsClusterDeployment
   logger.info("Test by `#{test_redis}`")
 end
+
+task :test_nfs do
+  include OnlyofficeDsClusterDeployment
+  logger.info("Test by `#{test_nfs}`")
+end

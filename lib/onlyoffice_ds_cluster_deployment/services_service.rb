@@ -51,6 +51,7 @@ module ServicesServer
     init_service('postgresql')
     init_service('rabbitmq')
     init_service('redis')
+    init_service('nfs')
   end
 
   # @return [String] test postgresql connection
@@ -61,5 +62,12 @@ module ServicesServer
 
   def test_redis
     "redis-cli -h #{services_server_ip} ping"
+  end
+
+  def test_nfs
+    'mkdir /tmp/nfs; '\
+    "sudo mount -t nfs #{services_server_ip}:/var/nfs/general /tmp/nfs; "\
+    'ls /tmp/nfs; '\
+    'umount /tmp/nfs'
   end
 end
