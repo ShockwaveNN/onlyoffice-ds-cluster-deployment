@@ -3,9 +3,9 @@
 require_relative 'lib/onlyoffice_ds_cluster_depoyment.rb'
 
 desc 'Create services server'
-task :create_services_server do
+task :init_services do
   include OnlyofficeDsClusterDeployment
-  create_services_server
+  init_services
 end
 
 desc 'Destroy all created services'

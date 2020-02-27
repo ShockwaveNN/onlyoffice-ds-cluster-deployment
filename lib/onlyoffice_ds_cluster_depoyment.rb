@@ -28,4 +28,12 @@ module OnlyofficeDsClusterDeployment
   def destroy_all
     do_api.destroy_droplet_by_name(services_server_name)
   end
+
+  # @param ip [String] ip of server to execute command
+  # @param command [String] command to execute
+  # @return [String] result of execution
+  def execute_ssh(ip, command)
+    `ssh -o StrictHostKeyChecking=no root@#{ip} "#{command}"`
+    sleep(5) # Timeout between commands to not be banned by ssh
+  end
 end
