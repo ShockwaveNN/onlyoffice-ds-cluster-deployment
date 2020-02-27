@@ -18,3 +18,8 @@ task :test_psql do
   include OnlyofficeDsClusterDeployment
   logger.info("Test by `#{test_postgresql}`")
 end
+
+task :test_rabbitmq do
+  include OnlyofficeDsClusterDeployment
+  logger.info("Open `http://#{services_server_ip}:15672` and login")
+end

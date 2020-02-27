@@ -38,10 +38,18 @@ module ServicesServer
     execute_ssh(services_server_ip, 'bash /root/postgresql_init.sh')
   end
 
+  def init_rabbitmq
+    init_file = "#{Dir.pwd}/lib/onlyoffice_ds_cluster_deployment/"\
+                'rabbitmq_init.sh'
+    send_file(services_server_ip, init_file)
+    execute_ssh(services_server_ip, 'bash /root/rabbitmq_init.sh')
+  end
+
   # Init all services
   def init_services
     create_services_server
-    init_postgres
+    # init_postgres
+    init_rabbitmq
   end
 
   # @return [String] test postgresql connection
