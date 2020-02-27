@@ -23,4 +23,9 @@ module OnlyofficeDsClusterDeployment
   def logger
     @logger ||= Logger.new(STDOUT)
   end
+
+  # Destroy all created servers
+  def destroy_all
+    do_api.destroy_droplet_by_name(services_server_name)
+  end
 end

@@ -7,3 +7,9 @@ task :create_services_server do
   include OnlyofficeDsClusterDeployment
   create_services_server
 end
+
+desc 'Destroy all created services'
+task :destroy_all do
+  include OnlyofficeDsClusterDeployment
+  destroy_all
+end
