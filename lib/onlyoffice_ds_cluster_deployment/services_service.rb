@@ -9,6 +9,8 @@ module ServicesServer
 
   # Create server with services
   def create_services_server
+    return if services_server_created?
+
     droplet = DropletKit::Droplet.new(name: services_server_name,
                                       region: DROPLET_REGION,
                                       image: DROPLET_IMAGE,
