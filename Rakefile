@@ -23,3 +23,8 @@ task :test_rabbitmq do
   include OnlyofficeDsClusterDeployment
   logger.info("Open `http://#{services_server_ip}:15672` and login")
 end
+
+task :test_redis do
+  include OnlyofficeDsClusterDeployment
+  logger.info("Test by `#{test_redis}`")
+end

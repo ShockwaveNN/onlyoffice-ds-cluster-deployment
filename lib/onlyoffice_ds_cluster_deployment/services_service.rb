@@ -31,11 +31,11 @@ module ServicesServer
     !do_api.get_droplet_id_by_name(services_server_name).nil?
   end
 
-  def init_postgres
+  def init_service(service_name)
     init_file = "#{Dir.pwd}/lib/onlyoffice_ds_cluster_deployment/"\
-                'postgresql_init.sh'
+                "#{service_name}_init.sh"
     send_file(services_server_ip, init_file)
-    execute_ssh(services_server_ip, 'bash /root/postgresql_init.sh')
+    execute_ssh(services_server_ip, "bash /root/#{service_name}_init.sh")
   end
 
   def init_rabbitmq
@@ -48,13 +48,18 @@ module ServicesServer
   # Init all services
   def init_services
     create_services_server
-    # init_postgres
-    init_rabbitmq
+    init_service('postgresql')
+    init_service('rabbitmq')
+    init_service('redis')
   end
 
   # @return [String] test postgresql connection
   def test_postgresql
     "PGPASSWORD=onlyoffice psql -h #{services_server_ip} "\
     '-U onlyoffice onlyoffice'
+  end
+
+  def test_redis
+    "redis-cli -h #{services_server_ip} ping"
   end
 end
