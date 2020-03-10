@@ -68,6 +68,6 @@ module ServicesServer
     'mkdir /tmp/nfs; '\
     "sudo mount -t nfs #{services_server_ip}:/var/nfs/general /tmp/nfs; "\
     'ls /tmp/nfs; '\
-    'umount /tmp/nfs'
+    'sudo umount /tmp/nfs'
   end
 end
